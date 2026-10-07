@@ -1,0 +1,45 @@
+{
+  "name": "touwa-editor",
+  "version": "0.1.0",
+  "description": "A secure, extensible desktop code editor foundation.",
+  "main": "out/main/main.js",
+  "author": "Touwa Editor contributors",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "typecheck": "tsc --noEmit",
+    "verify:security": "node scripts/verify-security.mjs",
+    "verify:workspace": "node scripts/verify-workspace.mjs",
+    "verify:electron": "node scripts/verify-electron.mjs",
+    "verify:all": "node scripts/verify-all.mjs",
+    "build": "electron-vite build",
+    "package": "electron-builder --dir",
+    "preview": "electron-vite preview"
+  },
+  "dependencies": {
+    "@monaco-editor/react": "^4.6.0",
+    "monaco-editor": "^0.52.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "electron": "32.2.7",
+    "electron-builder": "^25.1.8",
+    "electron-vite": "^2.3.0",
+    "typescript": "^5.7.2",
+    "vite": "^5.4.11"
+  },
+  "build": {
+    "appId": "com.touwa.editor",
+    "productName": "Touwa Editor",
+    "files": ["out/**/*", "package.json"],
+    "directories": {"output": "release"},
+    "win": {"target": [{"target": "nsis", "arch": ["x64"]}]},
+    "nsis": {"oneClick": false, "allowToChangeInstallationDirectory": true}
+  }
+}

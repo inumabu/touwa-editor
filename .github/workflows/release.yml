@@ -1,0 +1,21 @@
+name: Release
+on:
+  push: {tags: ['v*.*.*']}
+concurrency: {group: release-${{ github.ref }}, cancel-in-progress: false}
+jobs:
+  release:
+    runs-on: windows-latest
+    permissions: {contents: write}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.11.0', cache: npm}
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run verify:all
+      - run: npm run build
+      - run: npm run package
+      - shell: pwsh
+        run: Get-ChildItem release -Recurse | Get-FileHash -Algorithm SHA256 | Out-File release/SHA256SUMS.txt
+      - uses: softprops/action-gh-release@v2
+        with: {files: 'release/**', generate_release_notes: true}

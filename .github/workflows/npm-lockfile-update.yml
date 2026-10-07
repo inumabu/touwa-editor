@@ -1,0 +1,20 @@
+name: npm lockfile update
+on:
+  schedule: [{cron: '0 3 * * 1'}]
+  workflow_dispatch:
+permissions: {contents: write, pull-requests: write}
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.11.0', cache: npm}
+      - run: npm install --package-lock-only --ignore-scripts
+      - run: npm ci --ignore-scripts
+      - uses: peter-evans/create-pull-request@v7
+        with:
+          branch: automation/npm-lockfile-update
+          title: 'chore(deps): refresh npm lockfile'
+          commit-message: 'chore(deps): refresh npm lockfile'
+          labels: dependencies,npm
