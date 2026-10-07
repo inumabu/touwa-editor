@@ -32,7 +32,7 @@
     "electron-builder": "^25.1.8",
     "electron-vite": "^2.3.0",
     "typescript": "^5.7.2",
-    "vite": "^5.4.11"
+    "vite": "^8.3.2"
   },
   "build": {
     "appId": "com.touwa.editor",
